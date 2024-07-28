@@ -1,0 +1,28 @@
+*{
+    margin:0px;
+    padding:0px;
+}
+body{
+    background-color: rgb(14, 14, 36);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height:100vh;
+}
+.button-container{
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(3,1fr);
+    width:1000px;
+    height:1000px;
+    
+
+}
+.button{
+    height:100%;
+    width:100% ;
+    background-color: rgb(82, 53, 53);
+    border:10px solid black;
+    font-size:150px;
+
+}
