@@ -5,9 +5,11 @@
 body{
     background-color: rgb(14, 14, 36);
     display:flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height:100vh;
+    gap:20px;
 }
 .button-container{
     display:grid;
@@ -15,6 +17,7 @@ body{
     grid-template-rows: repeat(3,1fr);
     width:1000px;
     height:1000px;
+    
     
 
 }
@@ -24,5 +27,19 @@ body{
     background-color: rgb(82, 53, 53);
     border:10px solid black;
     font-size:150px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding-bottom:20px
 
+}
+.text{
+    font-size:2rem;
+    color:white
+}
+.new-game{
+    width:300px;
+    flex-basis:50px;
+    font-size:2.5rem
 }
