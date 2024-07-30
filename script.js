@@ -58,6 +58,7 @@ const game = (function(){
         domController.updateBoard()
         counter=2;
         console.log(counter)
+        domController.text.textContent = `${player1.name}'s turn`
         game.playGame();
   
 
@@ -67,54 +68,81 @@ const game = (function(){
     const playGame = function(){
       let counter = 2;
       console.log(counter)
-        domController.buttons.forEach(element => {
-          element.addEventListener("click",function(){
-            console.log(counter)
-            if (counter % 2 == 0){
-              
-              domController.text.textContent = "P2's turn"
-              gameboard.addThing(player1.type,element.getAttribute("number"))
-              
-              domController.updateBoard();
-              counter++
-              if (game.checkWin()==true){
-                console.log("p1 wins ez gg");
-                counter=2
-                domController.text.textContent = "p1 wins game is over"
-                domController.buttons.forEach(element =>{
-                  element.removeEventListener("click",function(){})
-                  
-                })
-                player1 = {}
-                  player2 = {}
-              }
-              
-            }
-            else if (counter%2 != 0){
-              gameboard.addThing(player2.type,element.getAttribute("number"))
-              domController.text.textContent = "P1 's turn"
-              domController.updateBoard();
-              counter++;
-              if(game.checkWin() == true){
-                console.log("p2wins gg ez")
-                counter=2
-                domController.text.textContent = "P2 won ez"
-                domController.buttons.forEach(element =>{
-                  element.removeEventListener("click",function(){})
+      
 
-                })
-                player1 = {}
-                  player2 = {}
-              }
-            }
-            
-          })
+      
+               
+      function handleClick(event){
+        const element = event.target
+        if (gameboard.getBoard()[element.getAttribute("number")] != ""){
+          return;
+        }
+        else if (counter % 2 == 0){
+              
+          domController.text.textContent = `${player2.name}'s turn`
+          gameboard.addThing(player1.type,element.getAttribute("number"))
           
-        })};
-       
-     //////////////////////////////////////////////////////////////////////////////  
+          domController.updateBoard();
+          counter++
+          if (game.checkWin()==true){
+            
+            counter=2
+            domController.text.textContent = `${player1.name} wins game is over`
+            domController.buttons.forEach(element =>{
+              element.removeEventListener("click",handleClick)
+              
+            })
+            player1 = {}
+              player2 = {}
+          }
+          else if (game.checkWin() =="tie"){
+            counter = 2
+            domController.text.textContent = `It's a tie!`
+            domController.buttons.forEach(element =>{
+              element.removeEventListener("click",handleClick)
+              
+            })
+            player1 = {}
+              player2 = {}
+          }
+          
+        }
+        else if (counter%2 != 0){
+          gameboard.addThing(player2.type,element.getAttribute("number"))
+          domController.text.textContent = `${player1.name}'s turn`
+          domController.updateBoard();
+          counter++;
+          if(game.checkWin() == true){
+            
+            counter=2
+            domController.text.textContent = `${player2.name} wins game is over`
+            domController.buttons.forEach(element =>{
+              element.removeEventListener("click",handleClick)
 
-      ////////////////////////////////////////////////////////////////////////////////
+            })
+            player1 = {}
+              player2 = {}
+          }
+          else if (game.checkWin() =="tie"){
+            counter = 2
+            domController.text.textContent = `It's a tie!`
+            domController.buttons.forEach(element =>{
+              element.removeEventListener("click",handleClick)
+              
+            })
+            player1 = {}
+              player2 = {}
+          }
+        }
+       
+      } 
+      domController.buttons.forEach(element => {
+        element.addEventListener("click",handleClick)})
+    
+    
+ 
+           };
+
     const checkWin = function(){
         let zero = gameboard.getBoard()[0]
         let one = gameboard.getBoard()[1]
@@ -149,8 +177,11 @@ const game = (function(){
         else if (two === four && four === six && six !== ""){
           return true
         }
+        else if (zero!=""&&one!=""&&two!=""&&three!=""&&four!=""&&five!=""&&six!=""&&seven!=""&&eight!=""){
+          return "tie"
+        }
        else{
-        console.log("try again")
+        return false
        }
     }
 
@@ -162,9 +193,3 @@ const game = (function(){
 domController.updateBoard()
 
 
-/* 
-when you win a poput text appears sating who won, and the score of the player (score has tyo get update BTW )
-it says whos tunr it is everyturn with text
-
-
-*/
